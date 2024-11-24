@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "itemName": "dolma kalem",
+      "quantity": 19,
+      "location": "muhasebe",
+      "category": "kalem"
+    }
+  ],
+  "categories": [
+    "halil",
+    "kalem"
+  ]
+}

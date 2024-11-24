@@ -19,6 +19,7 @@ export default function Home() {
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +37,15 @@ export default function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const filtered = items.filter(item =>
+      item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredItems(filtered);
+  }, [searchTerm, items]);
+
   const handleAddCategory = async () => {
-    const newCategory = prompt("Enter new category name:");
+    const newCategory = prompt("Yeni kategori oluştur:");
     if (newCategory) {
       await fetch('/api/save-category', {
         method: 'POST',
@@ -249,6 +257,13 @@ export default function Home() {
           <div className="col-span-12 lg:col-span-8">
             <div className="bg-slate-800/50 backdrop-blur-xl rounded-xl p-6 border border-slate-700/50">
               <h2 className="text-lg font-semibold mb-6">Demirbaş Listesi</h2>
+              <input
+                type="text"
+                placeholder="Ürün Ara"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 mb-4 focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-500"
+              />
               {loading ? (
                 <div className="flex justify-center items-center h-64">
                   <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
